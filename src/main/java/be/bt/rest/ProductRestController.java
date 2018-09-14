@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -32,4 +33,21 @@ public class ProductRestController {
                               : new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+
+    public ResponseEntity<Product> getById(@PathVariable Long id) {
+
+
+
+        Optional<Product> compte = repo.findById(id);
+
+        if (!compte.isPresent()) {
+
+            return ResponseEntity.notFound().build();
+
+        }
+
+        return ResponseEntity.ok().body(compte.get());
+
+    }
 }

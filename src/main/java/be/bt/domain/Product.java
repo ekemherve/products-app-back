@@ -1,7 +1,11 @@
 package be.bt.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Products")
@@ -12,6 +16,10 @@ public class Product {
     private Long id;
     private String name;
     private BigDecimal unitPrice;
+
+    @JsonIgnore
+    @ManyToMany
+    private List<Order> orders = new ArrayList<>();
 
     public Product() {
     }
@@ -45,5 +53,11 @@ public class Product {
         this.unitPrice = unitPrice;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
 
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 }
